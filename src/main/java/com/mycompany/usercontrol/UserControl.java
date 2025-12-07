@@ -6,7 +6,7 @@ package com.mycompany.usercontrol;
 
 /**
  *
- * @author igor2
+ * @author Igor Wendling
  */
 public class UserControl {
 
