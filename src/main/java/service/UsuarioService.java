@@ -12,7 +12,6 @@ import model.StatusUsuario;
 import model.Usuario;
 import repository.IUsuarioRepository;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class UsuarioService {
 
@@ -25,7 +24,7 @@ public class UsuarioService {
     public Usuario cadastrarNovoUsuario(Usuario novoUsuario) {
         
         if (usuarioRepository.buscarPorNomeDeUsuario(novoUsuario.getNomeDeUsuario()) != null) {
-            throw new IllegalArgumentException("Nome de usuario '" + novoUsuario.getNomeDeUsuario() + "' ja está em uso. Escolha outro nome.");
+            throw new IllegalArgumentException("Nome de usuario '" + novoUsuario.getNomeDeUsuario() + "' ja esta em uso. Escolha outro nome.");
         }
         
         if (!usuarioRepository.existeUsuarioCadastrado()) {

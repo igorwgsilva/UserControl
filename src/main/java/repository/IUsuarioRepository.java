@@ -4,18 +4,24 @@
  */
 package repository;
 
-/**
- *
- * @author igor Wendling
- */
 import java.util.List;
+import java.util.Optional;
 import model.Usuario;
 
+/**
+ * 
+ * @author igor Wendling
+ */
 public interface IUsuarioRepository {
     
     boolean existeUsuarioCadastrado(); 
     void salvar(Usuario usuario); 
     Usuario buscarPorNomeDeUsuario(String nomeDeUsuario);
+    
+    Optional<Usuario> buscarPorId(int id);
+    
     List<Usuario> buscarTodos(); 
     void atualizar(Usuario usuario);
+
+    void excluir(int id);
 }
