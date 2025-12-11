@@ -8,10 +8,13 @@ package service;
  *
  * @author igor Wendling
  */
-import model.StatusUsuario;
 import model.Usuario;
 import repository.IUsuarioRepository;
-import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import model.IPerfilUsuario;
+import model.PerfilAdministrador;
+import model.PerfilComum;
 
 public class UsuarioService {
 
@@ -21,23 +24,23 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Usuario cadastrarNovoUsuario(Usuario novoUsuario) {
+    public void cadastrarNovoUsuario(Usuario novoUsuario) {
         
-        if (usuarioRepository.buscarPorNomeDeUsuario(novoUsuario.getNomeDeUsuario()) != null) {
-            throw new IllegalArgumentException("Nome de usuario '" + novoUsuario.getNomeDeUsuario() + "' ja esta em uso. Escolha outro nome.");
+        // Validação de duplicidade
+        if (usuarioRepository.buscarPorNomeDeUsuario(novoUsuario.getNomeUsuario()) != null) {
+            throw new IllegalArgumentException("Nome de usuario '" + novoUsuario.getNomeUsuario() + "' ja esta em uso. Escolha outro nome.");
         }
         
+       // Regra do Primeiro Usuário (RNF/Regra de Negócio)
         if (!usuarioRepository.existeUsuarioCadastrado()) {
-            novoUsuario.setTipoPerfil("ADMINISTRADOR");
-            novoUsuario.setStatus(StatusUsuario.AUTORIZADO);
+            // Primeiro usuário é Admin e Autorizado
+            novoUsuario.setPerfil(new PerfilAdministrador());
+            novoUsuario.setAutorizado(true);
         } else {
-            novoUsuario.setTipoPerfil("PADRAO");
-            novoUsuario.setStatus(StatusUsuario.PENDENTE_AUTORIZACAO); 
+            // Demais usuários são Comuns e Pendentes (não autorizados)
+            novoUsuario.setPerfil(new PerfilComum());
+            novoUsuario.setAutorizado(false); 
         }
-
-        novoUsuario.setDataCadastro(LocalDateTime.now());
-        novoUsuario.setNotificacoesRecebidas(0);
-        novoUsuario.setNotificacoesLidas(0);
 
         try {
             usuarioRepository.salvar(novoUsuario);
@@ -45,46 +48,94 @@ public class UsuarioService {
             throw new RuntimeException("Falha ao salvar o novo usuário no banco de dados.", e);
         }
         
-        return novoUsuario;
     }
 
-    public Usuario autorizarUsuario(String nomeDeUsuario) {
+    public void autorizarUsuario(String nomeDeUsuario) {
+        // Busca usando o método do repositório
         Usuario usuario = usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);
 
         if (usuario == null) {
             throw new IllegalArgumentException("Usuario '" + nomeDeUsuario + "' nao encontrado.");
         }
 
-        if (usuario.getStatus() == StatusUsuario.AUTORIZADO) {
+        // Verifica boolean autorizado
+        if (usuario.isAutorizado()) {
             throw new IllegalArgumentException("Usuario '" + nomeDeUsuario + "' ja esta AUTORIZADO.");
         }
         
-        usuario.setStatus(StatusUsuario.AUTORIZADO);
+        // Autoriza
+        usuario.setAutorizado(true);
 
         try {
-            usuarioRepository.atualizar(usuario);
+            usuarioRepository.atualizar(usuario); 
         } catch (RuntimeException e) {
             throw new RuntimeException("Falha ao atualizar o status do usuario no banco de dados.", e);
         }
 
-        return usuario;
+        
     }
-
-    public Usuario autenticarUsuario(String nomeDeUsuario, String senhaEmTextoPuro) {
+////////////////////////////////////§===============================================================
+    public boolean autenticarUsuario(String nomeDeUsuario, String senhaEmTextoPuro) { // VERIFICAR SE É NECESSARIO UMA CLASSE LOGINSERVICE PARA ESSE METODO, PODE FERIR PRINCIPIO DA RESPONSABILIDADE UNICA
+       
         Usuario usuario = usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);
 
+        // Se o usuário não existir, retorna falso imediatamente
         if (usuario == null) {
-            return null;
+            return false;
         }
 
-        if (usuario.getStatus() != StatusUsuario.AUTORIZADO) {
-            throw new IllegalStateException("Usuário nao autorizado ou pendente de ativacao.");
+        // Verifica a autorização usando o boolean da classe Usuario
+        if (!usuario.isAutorizado()) {
+            throw new IllegalStateException("Usuário pendente de autorização. Contate o administrador.");
         }
 
-        if (senhaEmTextoPuro.equals(usuario.getSenha())) {
-            return usuario;
-        } else {
-            return null;
-        }
+        //retorna true se usuario e senha batem
+        return senhaEmTextoPuro.equals(usuario.getSenha());
     }
+    
+    ///====================================================================================================
+    
+    
+    public List<Usuario> buscarTodos() {
+        return usuarioRepository.buscarTodos(); // Assume que o repositório tem este método
+    }
+    
+    public void excluirUsuario(Usuario usuarioExecutor, Usuario usuarioParaExcluir) {
+        
+        //apenas Admin pode excluir
+        //admin não pode excluir a si mesmo
+        
+        if (!usuarioExecutor.isAdministrador()) {
+             throw new RuntimeException("Apenas administradores podem excluir usuários.");
+        }
+        if(usuarioExecutor.getId() == usuarioParaExcluir.getId()){
+                throw new RuntimeException("Não é possível excluir o proprio usuario");
+            }
+         if(isPrimeiroAdmin(usuarioParaExcluir)){
+                throw new RuntimeException("Não é possível excluir o Administrador Supremo");
+         }
+        
+        
+        usuarioRepository.excluir(usuarioParaExcluir.getId());
+    }
+
+    private boolean isPrimeiroAdmin(Usuario usuarioParaExcluir) { //verifica se é o primeiro usuario administrador
+        Optional<Usuario> primeiro = usuarioRepository.buscarPrimeiroAdministrador();
+        
+        return primeiro.isPresent() && primeiro.get().getId() == usuarioParaExcluir.getId();
+    }
+    
+    
+    public void alterarPerfil(Usuario alterador, Usuario aSerAlterado, IPerfilUsuario perfilNovo){
+         if(!alterador.isAdministrador()){
+                throw new RuntimeException("Somente Administradore Supremo pode alterar perfis.");
+            }
+         if(alterador.getId() == aSerAlterado.getId()){
+                throw new RuntimeException("Não é possível alterar o próprio usuario");
+            }
+         
+         aSerAlterado.setPerfil(perfilNovo);
+         usuarioRepository.atualizar(aSerAlterado);
+    }
+    
 }

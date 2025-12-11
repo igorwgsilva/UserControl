@@ -41,13 +41,9 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         mitLogin = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -71,7 +67,7 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(lblRodapeNomePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 738, Short.MAX_VALUE)
                 .addComponent(lblNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -88,10 +84,10 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         );
 
         dskPrincipalPanel.add(jPanel1);
-        jPanel1.setBounds(0, 270, 410, 20);
+        jPanel1.setBounds(0, 570, 1050, 20);
 
         fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
+        fileMenu.setText("Usuario");
 
         mitLogin.setMnemonic('o');
         mitLogin.setText("Login");
@@ -103,43 +99,26 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         fileMenu.add(mitLogin);
 
         saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        saveMenuItem.setText("Manter Usuário");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
+                saveMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        fileMenu.add(saveMenuItem);
 
         menuBar.add(fileMenu);
 
         editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
+        editMenu.setText("Notificação");
 
         cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
+        cutMenuItem.setText("Minhas Notificações");
         editMenu.add(cutMenuItem);
 
         copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
+        copyMenuItem.setText("Enviar Notificações");
         editMenu.add(copyMenuItem);
-
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
 
         menuBar.add(editMenu);
 
@@ -162,19 +141,19 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dskPrincipalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(dskPrincipalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1045, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dskPrincipalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(dskPrincipalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void mitLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitLoginActionPerformed
        
@@ -183,6 +162,10 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
     private void btnNNotificacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNNotificacoesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNNotificacoesActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,10 +221,8 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JDesktopPane dskPrincipalPanel;
     private javax.swing.JMenu editMenu;
-    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel jPanel1;
@@ -249,8 +230,6 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel lblRodapeNomePerfil;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem mitLogin;
-    private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
 

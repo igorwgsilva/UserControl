@@ -6,8 +6,6 @@ package repository;
  */
 import model.Usuario;
 import util.DbUtils;
-import model.StatusUsuario;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,43 +15,50 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import model.IPerfilUsuario;
+import model.PerfilAdministrador;
+import model.PerfilComum;
 
 public class UsuarioJdbcRepository implements IUsuarioRepository {
-  
+    
+    
+  //método auxiliar para converter a linha do banco em Objeto Usuario
     private Usuario mapResultSetToUsuario(ResultSet rs) throws SQLException {
-        Usuario usuario = new Usuario();
+        //Recupera dados básicos
+        int id = rs.getInt("id");
+        String nome = rs.getString("nome");
+        String nomeUsuario = rs.getString("nome_de_usuario");
+        String senha = rs.getString("senha");
+        boolean autorizado = rs.getBoolean("autorizado");
+        LocalDateTime dataCadastro = LocalDateTime.parse(rs.getString("data_cadastro"));
         
-        usuario.setId(rs.getInt("id")); 
-        usuario.setTipoPerfil(rs.getString("tipo_perfil"));
-        usuario.setStatus(StatusUsuario.valueOf(rs.getString("status_usuario"))); 
-        usuario.setNomeDeUsuario(rs.getString("nome_de_usuario"));
-        usuario.setNome(rs.getString("nome"));
-        usuario.setSenha(rs.getString("senha"));
+        // converte string do banco para classe de perfil de usuario
+        String tipoPerfilStr = rs.getString("tipo_perfil");
+        IPerfilUsuario perfil;
         
-        String dataString = rs.getString("data_cadastro");
-        usuario.setDataCadastro(LocalDateTime.parse(dataString)); 
+        if ("ADMIN".equalsIgnoreCase(tipoPerfilStr)) {
+            perfil = new PerfilAdministrador();
+        } else {
+            perfil = new PerfilComum();
+        }
+        Usuario user = new Usuario(id, nome, nomeUsuario, senha, perfil, autorizado, dataCadastro);
         
-        usuario.setNotificacoesRecebidas(rs.getInt("notificacoes_recebidas"));
-        usuario.setNotificacoesLidas(rs.getInt("notificacoes_lidas"));
-        
-        return usuario;
+        return user;
     }
 
     public static void createTableUsuario() {
-        String sql = """
+         String sql = """
                      CREATE TABLE IF NOT EXISTS usuario (
-                        id INTEGER PRIMARY KEY,
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
                         tipo_perfil TEXT NOT NULL,
-                        status_usuario TEXT NOT NULL,
+                        autorizado INTEGER NOT NULL,
                         nome_de_usuario TEXT UNIQUE NOT NULL,
                         nome TEXT NOT NULL,
                         senha TEXT NOT NULL,
-                        data_cadastro TEXT NOT NULL,
-                        notificacoes_recebidas INTEGER,
-                        notificacoes_lidas INTEGER
+                        data_cadastro TEXT NOT NULL
                      );
                      """;
-
+      
         try (Connection conn = DbUtils.connect();
              Statement stmt = conn.createStatement()) {
             
@@ -112,24 +117,24 @@ public class UsuarioJdbcRepository implements IUsuarioRepository {
 
     @Override
     public void salvar(Usuario usuario) {
-        String sql = """
+         String sql = """
                      INSERT INTO usuario 
-                     (tipo_perfil, status_usuario, nome_de_usuario, nome, senha, 
-                     data_cadastro, notificacoes_recebidas, notificacoes_lidas) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                     (tipo_perfil, autorizado, nome_de_usuario, nome, senha, data_cadastro) 
+                     VALUES (?, ?, ?, ?, ?, ?)
                      """;
 
         try (Connection conn = DbUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-            stmt.setString(1, usuario.getTipoPerfil());
-            stmt.setString(2, usuario.getStatus().name()); 
-            stmt.setString(3, usuario.getNomeDeUsuario());
+            //grava "ADMIN" ou "COMUM" baseado na instância do perfil
+            String tipoPerfilStr = usuario.isAdministrador() ? "ADMIN" : "COMUM";
+            
+            stmt.setString(1, tipoPerfilStr);
+            stmt.setBoolean(2, usuario.isAutorizado()); 
+            stmt.setString(3, usuario.getNomeUsuario());
             stmt.setString(4, usuario.getNome());
             stmt.setString(5, usuario.getSenha());
             stmt.setString(6, usuario.getDataCadastro().toString()); 
-            stmt.setInt(7, usuario.getNotificacoesRecebidas());
-            stmt.setInt(8, usuario.getNotificacoesLidas());
             
             int linhasAfetadas = stmt.executeUpdate();
             
@@ -190,25 +195,23 @@ public class UsuarioJdbcRepository implements IUsuarioRepository {
         String sql = """
                      UPDATE usuario SET 
                      tipo_perfil = ?, 
-                     status_usuario = ?, 
+                     autorizado = ?, 
                      nome = ?, 
-                     senha = ?, 
-                     notificacoes_recebidas = ?, 
-                     notificacoes_lidas = ?
+                     senha = ?
                      WHERE id = ?
                      """;
 
         try (Connection conn = DbUtils.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, usuario.getTipoPerfil());
-            stmt.setString(2, usuario.getStatus().name()); 
+            String tipoPerfilStr = usuario.isAdministrador() ? "ADMIN" : "COMUM";
+
+            stmt.setString(1, tipoPerfilStr);
+            stmt.setBoolean(2, usuario.isAutorizado());
             stmt.setString(3, usuario.getNome());
             stmt.setString(4, usuario.getSenha());
-            stmt.setInt(5, usuario.getNotificacoesRecebidas());
-            stmt.setInt(6, usuario.getNotificacoesLidas());
             
-            stmt.setInt(7, usuario.getId()); 
+            stmt.setInt(5, usuario.getId()); 
             
             int linhasAfetadas = stmt.executeUpdate();
             
@@ -240,5 +243,25 @@ public class UsuarioJdbcRepository implements IUsuarioRepository {
             System.err.println("Erro ao excluir usuario: " + e.getMessage());
             throw new RuntimeException("Falha na exclusão da persistencia.", e);
         }
+    }
+
+    @Override
+    public Optional<Usuario> buscarPrimeiroAdministrador() { //TESTAR SE FUNCIONA!!
+        //busca o primeiro user administrador
+        String sql = "SELECT * FROM usuario WHERE tipo_perfil = 'ADMIN' ORDER BY id ASC LIMIT 1";
+        
+        try (Connection conn = DbUtils.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            
+            if (rs.next()) {
+                
+                return Optional.of(mapResultSetToUsuario(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Falha na consulta ao banco de dados.", e);
+        }
+        
+        return Optional.empty();
     }
 }

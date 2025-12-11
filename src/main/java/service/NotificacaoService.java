@@ -5,7 +5,7 @@ package service;
  */
 
 import model.Notificacao;
-import model.StatusUsuario;
+
 import model.Usuario;
 import repository.INotificacaoRepository;
 import repository.IUsuarioRepository;
@@ -34,6 +34,7 @@ public class NotificacaoService {
             throw new IllegalArgumentException("A lista de destinatarios nao pode ser vazia.");
         }
 
+        
         for (Integer idDestinatario : idsDestinatarios) {
             Optional<Usuario> optDestinatario = usuarioRepository.buscarPorId(idDestinatario);
 
