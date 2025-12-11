@@ -44,6 +44,12 @@ public class AutoCadastroView extends javax.swing.JDialog {
 
         lblNome.setText("Nome Completo");
 
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+
         lblUsername.setText("Username");
 
         lblSenha.setText("Senha");
@@ -99,6 +105,10 @@ public class AutoCadastroView extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeActionPerformed
 
     public JButton getBtnCancelar() {
         return btnCancelar;
