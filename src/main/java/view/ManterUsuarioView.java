@@ -52,9 +52,17 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Nome Completo", "Username", "Perfil", "Data de Cadastro", "N° Notificações Enviadas", "N° Notificações Lidas"
+                "Nome Completo", "Username", "Perfil", "Data de Cadastro", "N° Notificações Enviadas", "N° Notificações Lidas", "Autorizado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tabTabelaUsuarios.setColumnSelectionAllowed(true);
         scrMenterUsuario.setViewportView(tabTabelaUsuarios);
         tabTabelaUsuarios.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);

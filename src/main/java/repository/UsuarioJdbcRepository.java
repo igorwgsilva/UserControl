@@ -46,6 +46,11 @@ public class UsuarioJdbcRepository implements IUsuarioRepository {
         return user;
     }
 
+    public UsuarioJdbcRepository() {
+        
+        createTableUsuario();
+    }
+    
     public static void createTableUsuario() {
          String sql = """
                      CREATE TABLE IF NOT EXISTS usuario (

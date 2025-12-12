@@ -24,6 +24,17 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
+    
+    
+    
+    public Usuario buscarPorNomeDeUsuario(String nomeDeUsuario) {
+        if (nomeDeUsuario == null || nomeDeUsuario.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome de usuário não pode ser vazio.");
+        }
+        
+        return usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);
+    }
+    
     public void cadastrarNovoUsuario(Usuario novoUsuario) {
         
         // Validação de duplicidade
@@ -50,6 +61,28 @@ public class UsuarioService {
         
     }
 
+    public void atualizarUsuario(Usuario usuario) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("O usuário para atualização não pode ser nulo.");
+        }
+        
+      
+        if (usuario.getNome() == null || usuario.getNome().trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode ficar vazio.");
+        }
+
+        try {
+           
+            usuarioRepository.atualizar(usuario);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Erro ao atualizar os dados do usuário no banco.", e);
+        }
+    }
+    
+    
+     
+   
+    
     public void autorizarUsuario(String nomeDeUsuario) {
         // Busca usando o método do repositório
         Usuario usuario = usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);

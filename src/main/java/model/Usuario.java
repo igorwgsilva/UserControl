@@ -17,10 +17,10 @@ public class Usuario {
     
     private String nomeUsuario; // username
     private String senha;
-    private IPerfilUsuario perfil; //perfil de usuario
+    private IPerfilUsuario perfil; //perfil de usuario, apenas admins podem alterar, excluir e autorizar usuarios, além de mandar notificações
     
-    private boolean autorizado;
-    private LocalDateTime dataCadastro;
+    private boolean autorizado;   // Usuarios não autorizados não podem realizar login no sistema
+    private LocalDateTime dataCadastro; 
     
  
     public Usuario(String nome, String nomeUsuario, String senha) {

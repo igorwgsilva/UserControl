@@ -26,7 +26,7 @@ public class NotificacaoService {
     }
 
     public void enviarNotificacao(Usuario remetente, List<Integer> idsDestinatarios, String mensagem) {
-        if (!"ADMINISTRADOR".equals(remetente.getTipoPerfil())) {
+        if (!remetente.isAdministrador()) {
             throw new IllegalStateException("Apenas administradores podem enviar notificacoes.");
         }
 
@@ -44,7 +44,7 @@ public class NotificacaoService {
             }
             
             Usuario destinatario = optDestinatario.get(); 
-            if (destinatario.getStatus() != StatusUsuario.AUTORIZADO) { 
+            if (!destinatario.isAutorizado()) { 
                 System.err.println("Destinatario ID " + idDestinatario + " nao autorizado e sera ignorado.");
                 continue;
             }

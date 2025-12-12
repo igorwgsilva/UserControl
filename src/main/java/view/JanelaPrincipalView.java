@@ -5,6 +5,7 @@
 package view;
 
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -23,6 +24,10 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         
     }
 
+    public JButton getBtnManterUsuario() {
+        return btnManterUsuario;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,6 +42,7 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         lblRodapeNomePerfil = new javax.swing.JLabel();
         btnNNotificacoes = new javax.swing.JButton();
         lblNNotificacoes = new javax.swing.JLabel();
+        btnManterUsuario = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         mitLogin = new javax.swing.JMenuItem();
@@ -85,6 +91,10 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
 
         dskPrincipalPanel.add(jPanel1);
         jPanel1.setBounds(0, 570, 1050, 20);
+
+        btnManterUsuario.setText("Manter Usuario");
+        dskPrincipalPanel.add(btnManterUsuario);
+        btnManterUsuario.setBounds(20, 20, 140, 23);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Usuario");
@@ -155,6 +165,10 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JDesktopPane getDskPrincipalPanel() {
+        return dskPrincipalPanel;
+    }
+
     private void mitLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitLoginActionPerformed
        
     }//GEN-LAST:event_mitLoginActionPerformed
@@ -217,6 +231,7 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton btnManterUsuario;
     private javax.swing.JButton btnNNotificacoes;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
