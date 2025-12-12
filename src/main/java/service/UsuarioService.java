@@ -23,6 +23,10 @@ public class UsuarioService {
     public UsuarioService(IUsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
+    
+    public boolean existeUsuarioCadastrado() {
+        return usuarioRepository.existeUsuarioCadastrado();
+    }
 
     public void cadastrarNovoUsuario(Usuario novoUsuario) {
         
