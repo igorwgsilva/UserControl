@@ -32,9 +32,6 @@ public class LoginPresenter {
         }
     }
 
-    /**
-     * US 02: Lógica de autenticação.
-     */
     public void realizarLogin() {
         String nomeUsuario = view.getNomeUsuario();
         String senha = view.getSenha();
@@ -45,27 +42,21 @@ public class LoginPresenter {
         }
 
         try {
-            // O Service retorna true ou false se a senha bater, e lança exceção se não estiver autorizado.
+
             boolean autenticado = usuarioService.autenticarUsuario(nomeUsuario, senha);
 
             if (autenticado) {
-                // Se a autenticação foi bem-sucedida, busca o usuário completo para passar à MainView.
                 Usuario usuarioAutenticado = usuarioService.buscarPorNomeDeUsuario(nomeUsuario);
                 
                 view.abrirJanelaPrincipal(usuarioAutenticado);
                 view.fechar();
-                // Log de sucesso
             } else {
                 view.exibirMensagemErro("Nome de usuário ou senha inválidos.");
-                // Log de falha
             }
         } catch (IllegalStateException e) {
-            // Captura o erro do Service se o usuário não estiver AUTORIZADO (US 02)
             view.exibirMensagemErro("Acesso negado: " + e.getMessage());
-            // Log de falha
         } catch (RuntimeException e) {
             view.exibirMensagemErro("Erro interno ao tentar autenticar.");
-            // Log de falha de persistência
         }
     }
 }

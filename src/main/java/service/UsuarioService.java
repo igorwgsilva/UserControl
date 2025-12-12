@@ -24,6 +24,11 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
     
+    // 2 novos metodos após implementação de LoginPresenter:
+    public Usuario buscarPorNomeDeUsuario(String nomeDeUsuario) {
+    return usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);
+}
+  
     public boolean existeUsuarioCadastrado() {
         return usuarioRepository.existeUsuarioCadastrado();
     }
