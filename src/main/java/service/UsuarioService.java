@@ -23,16 +23,20 @@ public class UsuarioService {
     public UsuarioService(IUsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
+    
+    
 
-    
-    
-    
-    public Usuario buscarPorNomeDeUsuario(String nomeDeUsuario) {
+     public Usuario buscarPorNomeDeUsuario(String nomeDeUsuario) {
         if (nomeDeUsuario == null || nomeDeUsuario.trim().isEmpty()) {
             throw new IllegalArgumentException("O nome de usuário não pode ser vazio.");
         }
         
         return usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);
+    }
+    
+  
+    public boolean existeUsuarioCadastrado() {
+        return usuarioRepository.existeUsuarioCadastrado();
     }
     
     public void cadastrarNovoUsuario(Usuario novoUsuario) {

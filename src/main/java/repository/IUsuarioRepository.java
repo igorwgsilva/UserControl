@@ -13,15 +13,13 @@ import model.Usuario;
  * @author igor Wendling
  */
 public interface IUsuarioRepository {
-    
+
     boolean existeUsuarioCadastrado();  //retorna verdadeiro se existe algum usuario cadastrado
     
     void salvar(Usuario usuario); 
     
     Usuario buscarPorNomeDeUsuario(String nomeDeUsuario);
-    
-    Optional<Usuario> buscarPorId(int id);
-    
+    Optional<Usuario> buscarPorId(int id);;
     List<Usuario> buscarTodos(); 
     
     void atualizar(Usuario usuario);
