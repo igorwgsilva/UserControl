@@ -19,7 +19,7 @@ public class AutoCadastroPresenter {
     private final IAutoCadastroView view;
     private final UsuarioService usuarioService;
 
-    public AutoCadastroPresenter(IAutoCadastroView view, UsuarioService usuarioService /*, IValidadorSenha validador */) {
+    public AutoCadastroPresenter(IAutoCadastroView view, UsuarioService usuarioService) {
         this.view = view;
         this.usuarioService = usuarioService;
     }
@@ -33,14 +33,6 @@ public class AutoCadastroPresenter {
             view.exibirMensagemErro("Todos os campos são obrigatórios.");
             return;
         }
-        
-        /*
-        Integrar depois com o validador de senhas
-         if (!validador.validar(senha)) {
-             view.exibirMensagemErro("A senha não atende aos requisitos.");
-             return;
-         }
-*/
 
         try {
 

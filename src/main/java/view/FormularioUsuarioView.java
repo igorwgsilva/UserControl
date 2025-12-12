@@ -128,6 +128,7 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
 
     public JButton getBtnCancelar() {
         return btnCancelar;
+        
     }
 
     public JButton getBtnSalvar() {
