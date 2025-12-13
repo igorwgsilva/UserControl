@@ -56,6 +56,9 @@ public class NotificacaoJdbcRepository implements INotificacaoRepository {
         }
     }
 
+    public NotificacaoJdbcRepository() {
+        createTableNotificacao();
+    }
 
     @Override
     public void salvar(Notificacao notificacao) {

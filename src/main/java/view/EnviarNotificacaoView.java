@@ -41,6 +41,9 @@ public class EnviarNotificacaoView extends javax.swing.JInternalFrame {
         btnEnviar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
         setTitle("Enviar Notificações");
 
         lblDestinatarios.setText("Destinatarios: ");

@@ -8,28 +8,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import repository.INotificacaoRepository;
 import repository.IUsuarioRepository;
+import repository.NotificacaoJdbcRepository;
 import repository.UsuarioJdbcRepository;
+import service.NotificacaoService;
 import service.UsuarioService;
 import view.AlterarSenhaView;
 import view.JanelaPrincipalView;
 import view.ManterUsuarioView;
+import view.MinhasNotificacoesView;
 
 /**
  *
  * @author Erko
  */
 public class JanelaPrincipalPresenter {
-     private Usuario usuarioLogado;
+    private Usuario usuarioLogado;
     private JanelaPrincipalView viewPrincipal;
     private UsuarioService usuarioService;
-
+    private NotificacaoService notificacaoService;
+    
+    
     public JanelaPrincipalPresenter(Usuario usuarioLogado) {
         this.usuarioLogado=usuarioLogado;
         this.viewPrincipal = new JanelaPrincipalView();
 
-        //instancia classe de repositorio
+        //instancia classe de repositoriousuario e repositorio notificacao
         IUsuarioRepository repositorioUsuarios = new UsuarioJdbcRepository(); 
+        INotificacaoRepository repositorioNotificacao = new NotificacaoJdbcRepository();
         
         //configurações iniciais
         //nome no rodape
@@ -37,19 +44,33 @@ public class JanelaPrincipalPresenter {
         
         //centraliza a tela
         viewPrincipal.setLocationRelativeTo(null); 
-        this.usuarioService = new UsuarioService(repositorioUsuarios);
         
-        //se não for admin não vê botão de alterar
+        
+        //instancias de services
+        this.usuarioService = new UsuarioService(repositorioUsuarios);
+        this.notificacaoService = new NotificacaoService(repositorioUsuarios, repositorioNotificacao);
+        
+        
+        
+        //se não for admin esconde menu feito para admins. limita acesso
         if (!usuarioLogado.isAdministrador()) {
             viewPrincipal.getMitManterUsuario().setVisible(false);
+            //esconde o menu enviar notificações se não for admin
+            if (viewPrincipal.getMitEnviarNotificacao() != null) {
+                viewPrincipal.getMitEnviarNotificacao().setVisible(false);
+            }
         }
+        
+        //atualiza o contador de notificações logo ao abrir (US 13)
+        atualizarContadorNotificacoes();
+        
         
         //congigurar listeners
         configurarListeners();
 
         //this.viewPrincipal.setLocationRelativeTo(null); // Centraliza se não estiver maximizado
         this.viewPrincipal.setVisible(true);
-//    atualizarRodape(); //FAZER    
+        atualizarContadorNotificacoes();    
     }
 
     private void configurarListeners() {
@@ -57,7 +78,7 @@ public class JanelaPrincipalPresenter {
         viewPrincipal.getBtnNNotificacoes().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(viewPrincipal, "Abrir tela de notificações (A implementar)");
+                abrirMinhasNotificacoes();
             }
         });
         
@@ -72,7 +93,7 @@ public class JanelaPrincipalPresenter {
             });
         }
         
-      
+      //--- MENU: ALTERAR SENHA ---
         if (viewPrincipal.getMitAlterarSenha() != null) {
             viewPrincipal.getMitAlterarSenha().addActionListener(new ActionListener() {
                 @Override
@@ -82,20 +103,81 @@ public class JanelaPrincipalPresenter {
             });
         }
         
+        // --- menu: Enviar Notificações ---
+        if (viewPrincipal.getMitEnviarNotificacao() != null) {
+            viewPrincipal.getMitEnviarNotificacao().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    abrirEnviarNotificacao();
+                }
+            });
+        }
+        
+        // --- Menu "Minhas Notificações" ---
+        if (viewPrincipal.getMitMinhasNotificacoes() != null) {
+            viewPrincipal.getMitMinhasNotificacoes().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    
+                    abrirMinhasNotificacoes(); 
+                }
+            });
+        }
+        
     }
 
+    private void abrirEnviarNotificacao() {
+        
+        view.EnviarNotificacaoView viewEnvio = new view.EnviarNotificacaoView();
+        
+        viewPrincipal.getDskPrincipalPanel().add(viewEnvio);
+        
+       
+        new presenter.EnviarNotificacaoPresenter(
+            viewEnvio, 
+            usuarioService, 
+            notificacaoService, 
+            usuarioLogado
+        );
+        
+        viewEnvio.setVisible(true);
+    }
+    
+    private void abrirMinhasNotificacoes() {
+        
+        MinhasNotificacoesView viewNotificacoes = new MinhasNotificacoesView();
+        viewPrincipal.getDskPrincipalPanel().add(viewNotificacoes);
+        
+        new MinhasNotificacoesPresenter(viewNotificacoes, notificacaoService, usuarioLogado);
+        
+        viewNotificacoes.setVisible(true);
+        
+        // Adiciona um ouvinte para saber quando essa janela for fechada
+        viewNotificacoes.addInternalFrameListener(new javax.swing.event.InternalFrameAdapter() {
+            @Override
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent e) {
+                // Assim que fechar a janela, atualiza o botão no rodapé!
+                atualizarContadorNotificacoes();
+            }
+        });
+        
+    }
+    
     private void abrirAlterarSenha() {
         AlterarSenhaView viewSenha = new AlterarSenhaView();
         viewPrincipal.getDskPrincipalPanel().add(viewSenha);
         
-        //Centraliza a janela interna
-//        java.awt.Dimension desktopSize = viewPrincipal.getDskPrincipalPanel().getSize();
-//        java.awt.Dimension frameSize = viewSenha.getSize();
-//        viewSenha.setLocation((desktopSize.width - frameSize.width)/2, (desktopSize.height - frameSize.height)/2);
-        
         new AlterarSenhaPresenter(viewSenha, usuarioService, usuarioLogado);
     }
     
+    public void atualizarContadorNotificacoes() {
+        try {
+            int naoLidas = notificacaoService.contarNotificacoesNaoLidas(usuarioLogado.getId());
+            viewPrincipal.getBtnNNotificacoes().setText(String.valueOf(naoLidas));
+        } catch (Exception e) {
+            System.err.println("Erro ao contar notificações: " + e.getMessage());
+        }
+    }
     
     private void abrirManterUsuarios() {
 
@@ -108,8 +190,7 @@ public class JanelaPrincipalPresenter {
         
         // 3. Cria o Presenter da Filha (Passando o desktop para ele poder abrir modais se precisar)
         // Isso conecta a lógica da tela de usuários
-        new ManterUsuarioPresenter(subView, usuarioService, viewPrincipal.getDskPrincipalPanel(), this.usuarioLogado);
-        
+        new ManterUsuarioPresenter(subView, usuarioService, this.notificacaoService, viewPrincipal.getDskPrincipalPanel(), this.usuarioLogado);
         // 4. Exibe
         subView.setVisible(true);
     }

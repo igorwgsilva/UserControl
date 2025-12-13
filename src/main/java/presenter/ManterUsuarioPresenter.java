@@ -15,6 +15,7 @@ import model.Usuario;
 import service.UsuarioService;
 import view.FormularioUsuarioView;
 import view.ManterUsuarioView;
+import service.NotificacaoService;
 
 
 
@@ -27,17 +28,19 @@ public class ManterUsuarioPresenter {
     private ManterUsuarioView view;
     private UsuarioService service;
     private JDesktopPane desktop;
-//    private Usuario usuarioLogado; verificar futuramente se precisa 
+    private NotificacaoService notificacaoService;
+
     
     // Lista auxiliar para mapear Linha da Tabela -> Objeto Usuario
     private List<Usuario> listaUsuariosCache;
 
     
     
-    public ManterUsuarioPresenter(ManterUsuarioView view, UsuarioService usuarioService, JDesktopPane dskPrincipalPanel, Usuario usuarioLogado) {  
+    public ManterUsuarioPresenter(ManterUsuarioView view, UsuarioService usuarioService,NotificacaoService notificacaoService , JDesktopPane dskPrincipalPanel, Usuario usuarioLogado) {  
         this.usuarioLogado = usuarioLogado;
         this.view = view;
         this.service = usuarioService;
+        this.notificacaoService = notificacaoService;
         this.desktop = dskPrincipalPanel;
         
         //configurar view
@@ -164,14 +167,18 @@ public class ManterUsuarioPresenter {
                 
                  String autorizadoTexto = u.isAutorizado() ? "Sim" : "Não"; //preenche de acordo se o usuario já é autorizado
                  
+                //conta notificações 
+                int totalEnviadas = notificacaoService.contarTotalRecebidas(u.getId());
+                int totalLidas = notificacaoService.contarTotalLidas(u.getId());
+                 
                 //Adiciona as linhas na tabela:               
                 model.addRow(new Object[]{
                     u.getNome(),          // Coluna 1
                     u.getNomeUsuario(),   // Coluna 2
                     perfilTexto,          // Coluna 3
                     dataFormatada,        // Coluna 4
-                    0,                    // Coluna 5 (Notificações Enviadas - Placeholder)
-                    0,                    // Coluna 6 (Notificações Lidas - Placeholder)
+                    totalEnviadas,   // Coluna 5 (Notificações Enviadas - Placeholder)
+                    totalLidas,                    // Coluna 6 (Notificações Lidas - Placeholder)
                     autorizadoTexto       // Coluna 7
                     
                     //service.contarNotificacoesEnviadas(u.getId()),   //FAZER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

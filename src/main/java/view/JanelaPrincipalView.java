@@ -29,6 +29,14 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         return mitManterUsuario;
     }
 
+    public JMenuItem getMitMinhasNotificacoes() {
+        return mitMinhasNotificacoes;
+    }
+
+    public JMenuItem getMitEnviarNotificacao() {
+        return mitEnviarNotificacao;
+    }
+
     public JMenuItem getMitAlterarSenha() {
         return mitAlterarSenha;
     }
@@ -54,8 +62,8 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         mitAlterarSenha = new javax.swing.JMenuItem();
         mitManterUsuario = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
+        mitMinhasNotificacoes = new javax.swing.JMenuItem();
+        mitEnviarNotificacao = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -71,32 +79,32 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
             }
         });
 
-        lblNNotificacoes.setText("N° Notificações:");
+        lblNNotificacoes.setText("Notificações não lidas");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(lblRodapeNomePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 738, Short.MAX_VALUE)
-                .addComponent(lblNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblRodapeNomePerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 537, Short.MAX_VALUE)
+                .addComponent(lblNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRodapeNomePerfil)
-                    .addComponent(btnNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNNotificacoes)))
+                    .addComponent(btnNNotificacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNNotificacoes))
+                .addGap(11, 11, 11))
         );
 
         dskPrincipalPanel.add(jPanel1);
-        jPanel1.setBounds(0, 570, 1050, 20);
+        jPanel1.setBounds(0, 500, 1050, 50);
 
         mitUsuario.setMnemonic('f');
         mitUsuario.setText("Usuario");
@@ -124,13 +132,13 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Notificação");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Minhas Notificações");
-        editMenu.add(cutMenuItem);
+        mitMinhasNotificacoes.setMnemonic('t');
+        mitMinhasNotificacoes.setText("Minhas Notificações");
+        editMenu.add(mitMinhasNotificacoes);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Enviar Notificações");
-        editMenu.add(copyMenuItem);
+        mitEnviarNotificacao.setMnemonic('y');
+        mitEnviarNotificacao.setText("Enviar Notificações");
+        editMenu.add(mitEnviarNotificacao);
 
         menuBar.add(editMenu);
 
@@ -235,8 +243,6 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton btnNNotificacoes;
     private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane dskPrincipalPanel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenu helpMenu;
@@ -245,7 +251,9 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel lblRodapeNomePerfil;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem mitAlterarSenha;
+    private javax.swing.JMenuItem mitEnviarNotificacao;
     private javax.swing.JMenuItem mitManterUsuario;
+    private javax.swing.JMenuItem mitMinhasNotificacoes;
     private javax.swing.JMenu mitUsuario;
     // End of variables declaration//GEN-END:variables
 
