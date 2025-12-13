@@ -175,4 +175,8 @@ public class UsuarioService {
          usuarioRepository.atualizar(aSerAlterado);
     }
     
+    public void excluirTodosUsuarios() { //VERIFICAR SE NÃO FERE ALGUM REQUISITO OU PRINCIPIO
+       
+        usuarioRepository.excluirTodos();
+    }
 }

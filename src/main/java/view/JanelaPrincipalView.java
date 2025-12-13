@@ -7,6 +7,7 @@ package view;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 /**
@@ -24,9 +25,15 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         
     }
 
-    public JButton getBtnManterUsuario() {
-        return btnManterUsuario;
+    public JMenuItem getMitManterUsuario() {
+        return mitManterUsuario;
     }
+
+    public JMenuItem getMitAlterarSenha() {
+        return mitAlterarSenha;
+    }
+
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,11 +49,10 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         lblRodapeNomePerfil = new javax.swing.JLabel();
         btnNNotificacoes = new javax.swing.JButton();
         lblNNotificacoes = new javax.swing.JLabel();
-        btnManterUsuario = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        mitLogin = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
+        mitUsuario = new javax.swing.JMenu();
+        mitAlterarSenha = new javax.swing.JMenuItem();
+        mitManterUsuario = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -92,32 +98,28 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         dskPrincipalPanel.add(jPanel1);
         jPanel1.setBounds(0, 570, 1050, 20);
 
-        btnManterUsuario.setText("Manter Usuario");
-        dskPrincipalPanel.add(btnManterUsuario);
-        btnManterUsuario.setBounds(20, 20, 140, 23);
+        mitUsuario.setMnemonic('f');
+        mitUsuario.setText("Usuario");
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("Usuario");
-
-        mitLogin.setMnemonic('o');
-        mitLogin.setText("Login");
-        mitLogin.addActionListener(new java.awt.event.ActionListener() {
+        mitAlterarSenha.setMnemonic('o');
+        mitAlterarSenha.setText("Alterar Senha");
+        mitAlterarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mitLoginActionPerformed(evt);
+                mitAlterarSenhaActionPerformed(evt);
             }
         });
-        fileMenu.add(mitLogin);
+        mitUsuario.add(mitAlterarSenha);
 
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Manter Usuário");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        mitManterUsuario.setMnemonic('s');
+        mitManterUsuario.setText("Manter Usuário");
+        mitManterUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
+                mitManterUsuarioActionPerformed(evt);
             }
         });
-        fileMenu.add(saveMenuItem);
+        mitUsuario.add(mitManterUsuario);
 
-        menuBar.add(fileMenu);
+        menuBar.add(mitUsuario);
 
         editMenu.setMnemonic('e');
         editMenu.setText("Notificação");
@@ -169,53 +171,53 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
         return dskPrincipalPanel;
     }
 
-    private void mitLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitLoginActionPerformed
+    private void mitAlterarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitAlterarSenhaActionPerformed
        
-    }//GEN-LAST:event_mitLoginActionPerformed
+    }//GEN-LAST:event_mitAlterarSenhaActionPerformed
 
     private void btnNNotificacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNNotificacoesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnNNotificacoesActionPerformed
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+    private void mitManterUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mitManterUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_saveMenuItemActionPerformed
+    }//GEN-LAST:event_mitManterUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JanelaPrincipalView().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(JanelaPrincipalView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new JanelaPrincipalView().setVisible(true);
+//            }
+//        });
+//    }
 
     public JButton getBtnNNotificacoes() {
         return btnNNotificacoes;
@@ -226,26 +228,25 @@ public class JanelaPrincipalView extends javax.swing.JFrame {
     }
 
     public JMenuItem getMitLogin() {
-        return mitLogin;
+        return mitAlterarSenha;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JButton btnManterUsuario;
     private javax.swing.JButton btnNNotificacoes;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane dskPrincipalPanel;
     private javax.swing.JMenu editMenu;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblNNotificacoes;
     private javax.swing.JLabel lblRodapeNomePerfil;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem mitLogin;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenuItem mitAlterarSenha;
+    private javax.swing.JMenuItem mitManterUsuario;
+    private javax.swing.JMenu mitUsuario;
     // End of variables declaration//GEN-END:variables
 
 }

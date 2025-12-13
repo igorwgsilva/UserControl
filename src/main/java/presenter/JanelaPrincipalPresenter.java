@@ -11,6 +11,7 @@ import model.Usuario;
 import repository.IUsuarioRepository;
 import repository.UsuarioJdbcRepository;
 import service.UsuarioService;
+import view.AlterarSenhaView;
 import view.JanelaPrincipalView;
 import view.ManterUsuarioView;
 
@@ -34,8 +35,15 @@ public class JanelaPrincipalPresenter {
         //nome no rodape
         viewPrincipal.getLblRodapeNomePerfil().setText(usuarioLogado.getNome()+ " - "+ usuarioLogado.getNomeDePerfil());
         
+        //centraliza a tela
+        viewPrincipal.setLocationRelativeTo(null); 
         this.usuarioService = new UsuarioService(repositorioUsuarios);
-
+        
+        //se não for admin não vê botão de alterar
+        if (!usuarioLogado.isAdministrador()) {
+            viewPrincipal.getMitManterUsuario().setVisible(false);
+        }
+        
         //congigurar listeners
         configurarListeners();
 
@@ -54,21 +62,45 @@ public class JanelaPrincipalPresenter {
         });
         
         // --- Menu: Manter Usuários ---
-        // ATENÇÃO: Você precisa criar o getter 'getMitManterUsuarios' na View Principal
-        if (viewPrincipal.getBtnManterUsuario() != null) {
-            viewPrincipal.getBtnManterUsuario().addActionListener(new ActionListener() {
+  
+        if (viewPrincipal.getMitManterUsuario() != null) {
+            viewPrincipal.getMitManterUsuario().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     abrirManterUsuarios();
                 }
             });
         }
+        
+      
+        if (viewPrincipal.getMitAlterarSenha() != null) {
+            viewPrincipal.getMitAlterarSenha().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    abrirAlterarSenha();
+                }
+            });
+        }
+        
     }
 
+    private void abrirAlterarSenha() {
+        AlterarSenhaView viewSenha = new AlterarSenhaView();
+        viewPrincipal.getDskPrincipalPanel().add(viewSenha);
+        
+        //Centraliza a janela interna
+//        java.awt.Dimension desktopSize = viewPrincipal.getDskPrincipalPanel().getSize();
+//        java.awt.Dimension frameSize = viewSenha.getSize();
+//        viewSenha.setLocation((desktopSize.width - frameSize.width)/2, (desktopSize.height - frameSize.height)/2);
+        
+        new AlterarSenhaPresenter(viewSenha, usuarioService, usuarioLogado);
+    }
+    
+    
     private void abrirManterUsuarios() {
 
 
-        // 1. Cria a View Filha (Baseada no seu arquivo ManterUsuarioView.java)
+        // 1. ria a View Filha (Baseada no seu arquivo ManterUsuarioView.java)
         ManterUsuarioView subView = new ManterUsuarioView();
         
         // 2. Adiciona ao DesktopPane da Principal

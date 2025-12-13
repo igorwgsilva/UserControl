@@ -27,4 +27,6 @@ public interface IUsuarioRepository {
     void excluir(int id);
 
     public Optional<Usuario> buscarPrimeiroAdministrador();
+    
+    void excluirTodos();
 }

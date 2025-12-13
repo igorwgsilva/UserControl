@@ -269,4 +269,25 @@ public class UsuarioJdbcRepository implements IUsuarioRepository {
         
         return Optional.empty();
     }
+
+    @Override
+    public void excluirTodos() {
+        String sqlDelete = "DELETE FROM usuario";
+        String sqlResetId = "DELETE FROM sqlite_sequence WHERE name='usuario'";
+        
+        try (Connection conn = DbUtils.connect();
+             Statement stmt = conn.createStatement()) {
+            
+            // apaga todos os registros
+            stmt.executeUpdate(sqlDelete);
+            
+            // reseta o contador de id para começar do 1 novamente
+            stmt.executeUpdate(sqlResetId);
+            
+            System.out.println("Banco de dados limpo com sucesso.");
+            
+        } catch (SQLException e) {
+            throw new RuntimeException("Falha ao deletar todos reigistros da tabela usuario.", e);
+        }
+    }
 }
