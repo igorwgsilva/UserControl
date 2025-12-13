@@ -1,6 +1,9 @@
 # Criação e manutenção de usuário
 
-Este repositório contém a entrega da Atividade Avaliativa focada na implementação das funcionalidades de controle e manutenção de usuário
+Este repositório contém a entrega da Atividade Avaliativa focada na implementação das funcionalidades de controle e manutenção de usuário.
+
+Relatório de Requisitos não implementados: https://docs.google.com/document/d/1IcbJpu5d1V8u3sJHeyb0YyOGnuab9fgAPyVCM_BVxh0/edit?usp=sharing
+
 ## 1. Integrantes do Grupo
 
 | Nome Completo
