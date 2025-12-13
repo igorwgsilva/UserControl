@@ -39,7 +39,6 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
         lblSenha = new javax.swing.JLabel();
         txtSenha = new javax.swing.JTextField();
         chkAdministrador = new javax.swing.JCheckBox();
-        chkAutorizado = new javax.swing.JCheckBox();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
@@ -59,8 +58,6 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
 
         chkAdministrador.setText("Perfil Administrador");
 
-        chkAutorizado.setText("Autorizado");
-
         btnSalvar.setText("Salvar");
 
         btnCancelar.setText("Cancelar");
@@ -74,8 +71,7 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(chkAdministrador)
-                        .addGap(18, 18, 18)
-                        .addComponent(chkAutorizado))
+                        .addGap(99, 99, 99))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,9 +105,7 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
                     .addComponent(lblSenha)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chkAdministrador)
-                    .addComponent(chkAutorizado))
+                .addComponent(chkAdministrador)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
@@ -138,10 +132,10 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
     public JCheckBox getChkAdministrador() {
         return chkAdministrador;
     }
-
-    public JCheckBox getChkAutorizado() {
-        return chkAutorizado;
-    }
+//
+//    public JCheckBox getChkAutorizado() {
+//        return chkAutorizado;
+//    }
 
     public JLabel getLblNome() {
         return lblNome;
@@ -164,7 +158,6 @@ public class FormularioUsuarioView extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JCheckBox chkAdministrador;
-    private javax.swing.JCheckBox chkAutorizado;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblSenha;
     private javax.swing.JLabel lblUsername;

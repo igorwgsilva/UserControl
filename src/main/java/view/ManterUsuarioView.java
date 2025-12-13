@@ -23,6 +23,10 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
        
     }
 
+    public JButton getBtnAutorizar() {
+        return btnAutorizar;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +42,7 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
         btnNovoUsuario = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
+        btnAutorizar = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -78,6 +83,8 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAutorizar.setText("Autorizar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,6 +94,8 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scrMenterUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnAutorizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExcluir)
@@ -103,7 +112,8 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoUsuario)
                     .addComponent(btnExcluir)
-                    .addComponent(btnAlterar))
+                    .addComponent(btnAlterar)
+                    .addComponent(btnAutorizar))
                 .addContainerGap())
         );
 
@@ -137,6 +147,7 @@ public class ManterUsuarioView extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnAutorizar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovoUsuario;
     private javax.swing.JButton jButton1;

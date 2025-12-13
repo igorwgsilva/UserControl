@@ -34,7 +34,7 @@ public class UsuarioService {
         return usuarioRepository.buscarPorNomeDeUsuario(nomeDeUsuario);
     }
     
-  
+     //usado no autocadastro -----------------------
     public boolean existeUsuarioCadastrado() {
         return usuarioRepository.existeUsuarioCadastrado();
     }
@@ -64,7 +64,20 @@ public class UsuarioService {
         }
         
     }
-
+    // Método exclusivo para quando o Admin clica em "Novo"
+    public void cadastrarPeloAdmin(Usuario usuario) {
+        // Validações básicas
+        if (usuarioRepository.buscarPorNomeDeUsuario(usuario.getNomeUsuario()) != null) {
+            throw new IllegalArgumentException("Usuário já existe.");
+        }
+        
+        //se foi o Admin que criou, nasce AUTORIZADO.
+        usuario.setAutorizado(true);
+        
+        usuarioRepository.salvar(usuario);
+    }
+    
+    
     public void atualizarUsuario(Usuario usuario) {
         if (usuario == null) {
             throw new IllegalArgumentException("O usuário para atualização não pode ser nulo.");

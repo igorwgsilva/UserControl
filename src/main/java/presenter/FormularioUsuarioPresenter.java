@@ -48,12 +48,12 @@ public class FormularioUsuarioPresenter {
             view.getTxtSenha().setText(usuarioEdicao.getSenha());
             
             view.getChkAdministrador().setSelected(usuarioEdicao.isAdministrador());
-            view.getChkAutorizado().setSelected(usuarioEdicao.isAutorizado());
+//            view.getChkAutorizado().setSelected(usuarioEdicao.isAutorizado());
             
             view.getTxtUsername().setEditable(false); 
         } else {
             view.setTitle("Novo Usuário");
-            view.getChkAutorizado().setSelected(false);
+//            view.getChkAutorizado().setSelected(false);
             view.getChkAdministrador().setSelected(false);
         }
         
@@ -83,7 +83,7 @@ public class FormularioUsuarioPresenter {
             String username = view.getTxtUsername().getText();
             String senha = view.getTxtSenha().getText();
             boolean isAdmin = view.getChkAdministrador().isSelected();
-            boolean isAutorizado = view.getChkAutorizado().isSelected();
+//            boolean isAutorizado = view.getChkAutorizado().isSelected();
 
             if (nome.isEmpty() || username.isEmpty() || senha.isEmpty()) { //validação para campos vazios
                 JOptionPane.showMessageDialog(view, "Preencha todos os campos obrigatórios.");
@@ -110,13 +110,13 @@ public class FormularioUsuarioPresenter {
             if (usuarioEdicao == null) {
                 // --- NOVO ---
                 Usuario novo = new Usuario(nome, username, senha);
-                service.cadastrarNovoUsuario(novo);
+                service.cadastrarPeloAdmin(novo);
                 JOptionPane.showMessageDialog(view, "Usuário cadastrado com sucesso!");
             } else {
                 // --- EDITAR ---
                 usuarioEdicao.setNome(nome);
                 usuarioEdicao.setSenha(senha);
-                usuarioEdicao.setAutorizado(isAutorizado);
+//                usuarioEdicao.setAutorizado(isAutorizado);
                 
                 if (isAdmin) {
                     usuarioEdicao.setPerfil(new PerfilAdministrador());
@@ -129,7 +129,7 @@ public class FormularioUsuarioPresenter {
                 JOptionPane.showMessageDialog(view, "Usuário atualizado com sucesso!");
             }
 
-            // MUDANÇA 3: Chamamos diretamente o método público do pai
+            // Atualzia tabela
             if (presenterPai != null) {
                 presenterPai.carregarTabela();
             }

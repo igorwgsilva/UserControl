@@ -88,7 +88,56 @@ public class ManterUsuarioPresenter {
                 excluirUsuario();
             }
         });
+        
+        view.getBtnAutorizar().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                autorizarUsuarioSelecionado();
+            }
+        });
+        
     }
+    
+    private void autorizarUsuarioSelecionado() {
+        //linha selecionada na tabela
+        int linha = view.getTabTabelaUsuarios().getSelectedRow();
+        
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(view, "Selecione um usuário na lista.");
+            return;
+        }
+
+        // Pega o objeto real da lista (cache)
+        Usuario usuarioAlvo = listaUsuariosCache.get(linha);
+
+        // Verifica se já não está autorizado
+        if (usuarioAlvo.isAutorizado()) {
+            JOptionPane.showMessageDialog(view, "Este usuário já está autorizado!");
+            return;
+        }
+
+        // Confirmação
+        int confirm = JOptionPane.showConfirmDialog(view, 
+            "Confirma a autorização de acesso para " + usuarioAlvo.getNome() + "?",
+            "Autorizar Usuário",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // Chama o Service (que vai dar o update no banco)
+                service.autorizarUsuario(usuarioAlvo.getNomeUsuario());
+                
+                JOptionPane.showMessageDialog(view, "Acesso liberado com sucesso!");
+                
+                // Recarrega a tabela para mudar o texto de "Não" para "Sim"
+                carregarTabela();
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(view, "Erro: " + e.getMessage());
+            }
+        }
+    }
+    
 
     public void carregarTabela() {
         DefaultTableModel model = (DefaultTableModel) view.getTabTabelaUsuarios().getModel();

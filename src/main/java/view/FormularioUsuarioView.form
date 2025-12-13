@@ -27,8 +27,7 @@
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="chkAdministrador" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="chkAutorizado" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" attributes="0">
@@ -74,10 +73,7 @@
                   <Component id="txtSenha" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="chkAdministrador" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="chkAutorizado" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="chkAdministrador" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -116,11 +112,6 @@
     <Component class="javax.swing.JCheckBox" name="chkAdministrador">
       <Properties>
         <Property name="text" type="java.lang.String" value="Perfil Administrador"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JCheckBox" name="chkAutorizado">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Autorizado"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalvar">
