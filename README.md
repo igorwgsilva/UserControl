@@ -49,3 +49,7 @@ Para construir e executar o projeto, os seguintes pré-requisitos são necessár
 | **Validador Senha** | `com.github.claytonfraga:validadorsenha` | Dependência externa para validação. |
 
 ### 3.2 Comandos de Build
+
+mvn clean install
+
+mvn exec:java
