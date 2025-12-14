@@ -4,18 +4,10 @@
 
 package com.mycompany.usercontrol;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
-import model.PerfilAdministrador;
-import model.Usuario;
-import presenter.JanelaPrincipalPresenter;
 import presenter.LoginCadastroPresenter;
-import presenter.ManterUsuarioPresenter;
 import repository.UsuarioJdbcRepository;
 import service.UsuarioService;
-import view.ManterUsuarioView;
 
 /**
  *

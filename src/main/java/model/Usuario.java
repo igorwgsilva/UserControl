@@ -57,11 +57,7 @@ public class Usuario {
     public String toString() {
         return "Usuario{" + "id=" + id + ", nome=" + nome + ", nomeUsuario=" + nomeUsuario + ", senha=" + senha + ", perfil=" + perfil + ", autorizado=" + autorizado + ", dataCadastro=" + dataCadastro + '}';
     }
-     
-   
-//    public boolean {
-//        return this.perfil
-//    }
+
 
     public IPerfilUsuario getPerfil() {
         return this.perfil;

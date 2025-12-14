@@ -13,13 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Optional;
-import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import service.UsuarioService;
 import view.LoginCadastroView;
-import view.ManterUsuarioView;
 
 
 public class LoginCadastroPresenter {
