@@ -62,4 +62,5 @@ cd UserControl
 3. Compile e execute via Maven (ou abra no NetBeans):
 
     mvn clean install
+
     mvn exec:java -Dexec.mainClass="view.JanelaPrincipalView"
