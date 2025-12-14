@@ -54,7 +54,7 @@ Este projeto utiliza **Java 17** e **Maven**.
 
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/igorwgsilva/UserControl.git](https://github.com/igorwgsilva/UserControl.git)
+   git clone https://github.com/igorwgsilva/UserControl.git
 
     2. Acesse a pasta:
 Bash
