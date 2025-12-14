@@ -56,11 +56,14 @@ Este projeto utiliza **Java 17** e **Maven**.
    ```bash
    git clone https://github.com/igorwgsilva/UserControl.git
 
-    2. Acesse a pasta:
-Bash
-cd UserControl
+2. Acesse a pasta:
+
+    cd UserControl
+   
+--
 3. Compile e execute via Maven (ou abra no NetBeans):
 
     mvn clean install
+-
 
-    mvn exec:java -Dexec.mainClass="view.JanelaPrincipalView"
+     mvn exec:java -Dexec.mainClass="view.JanelaPrincipalView"
