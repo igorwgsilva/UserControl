@@ -50,6 +50,17 @@ Para construir e executar o projeto, os seguintes pré-requisitos são necessár
 
 ### 3.2 Comandos de Build
 
-mvn clean install
+Este projeto utiliza **Java 17** e **Maven**.
 
-mvn exec:java
+1. Clone o repositório:
+   ```bash
+   git clone [https://github.com/igorwgsilva/UserControl.git](https://github.com/igorwgsilva/UserControl.git)
+
+    2. Acesse a pasta:
+Bash
+cd UserControl
+
+    3. Compile e execute via Maven (ou abra no NetBeans):
+Bash
+mvn clean install
+mvn exec:java -Dexec.mainClass="view.JanelaPrincipalView"
